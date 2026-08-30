@@ -52,7 +52,8 @@ async function calculate() {
     document.getElementById('sms-val').innerText = Number(sms).toLocaleString() + " SMS";
 
     try {
-        const response = await fetch('http://localhost:8000/api/calculate', {
+        // Updated to relative path for Cloud compatibility
+        const response = await fetch('/api/calculate', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -85,13 +86,13 @@ function updateDisplay() {
     // SMS is only applicable for monthly and yearly, hide or show rate for hourly
     if (currentCycle === 'hourly') {
         document.getElementById('out-sms').innerText = '$0.00 (Mo. rate)';
-        document.getElementById('out-total').innerText = '$' + data.total_hourly_cost.toFixed(4);
+        document.getElementById('out-total').innerText = 'ETB ' + data.total_hourly_cost.toFixed(4);
     } else if (currentCycle === 'monthly') {
         document.getElementById('out-sms').innerText = '$' + data.SMS_cost.toFixed(2);
-        document.getElementById('out-total').innerText = '$' + data.total_monthly_cost.toFixed(2);
+        document.getElementById('out-total').innerText = 'ETB ' + data.total_monthly_cost.toFixed(2);
     } else if (currentCycle === 'yearly') {
         document.getElementById('out-sms').innerText = '$' + data.SMS_cost.toFixed(2);
-        document.getElementById('out-total').innerText = '$' + data.total_yearly_cost.toFixed(2);
+        document.getElementById('out-total').innerText = 'ETB ' + data.total_yearly_cost.toFixed(2);
     }
 }
 
@@ -132,8 +133,8 @@ async function generatePDFQuote() {
     const sms = document.getElementById('sms').value;
 
     try {
-        // Send request to FastAPI backend (Server-Side PDF Generation)
-        const response = await fetch('http://localhost:8000/api/generate-pdf', {
+        // Updated to relative path for Cloud compatibility
+        const response = await fetch('/api/generate-pdf', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
