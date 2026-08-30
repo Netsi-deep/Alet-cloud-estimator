@@ -106,7 +106,7 @@ def generate_pdf(data: PDFQuoteRequest):
         'TitleStyle',
         parent=styles['Heading1'],
         fontSize=18,
-        textColor=colors.HexColor('#008A2E'),  # ወደ ደማቁ አረንጓዴ ተቀይሯል
+        textColor=colors.HexColor('#008A2E'),
         spaceAfter=6
     )
     subtitle_style = ParagraphStyle(
@@ -179,7 +179,7 @@ def generate_pdf(data: PDFQuoteRequest):
     
     t = Table(table_data, colWidths=[200, 200, 130])
     t.setStyle(TableStyle([
-        ('BACKGROUND', (0,0), (-1,0), colors.HexColor('#008A2E')),  # ወደ ደማቁ አረንጓዴ ተቀይሯል
+        ('BACKGROUND', (0,0), (-1,0), colors.HexColor('#008A2E')),
         ('TEXTCOLOR', (0,0), (-1,0), colors.whitesmoke),
         ('ALIGN', (0,0), (-1,-1), 'LEFT'),
         ('ALIGN', (2,0), (2,-1), 'RIGHT'),
@@ -201,8 +201,5 @@ def generate_pdf(data: PDFQuoteRequest):
         headers={"Content-Disposition": f"attachment; filename={quote_id}.pdf"}
     )
 
-@app.get("/")
-def read_index():
-    return FileResponse("index.html")
-
-app.mount("/", StaticFiles(directory="."), name="static")
+# Static files mount with html=True so it automatically serves index.html on root '/'
+app.mount("/", StaticFiles(directory=".", html=True), name="static")
